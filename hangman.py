@@ -3,10 +3,12 @@
 
 import random
 from hangman_data import word_list, stages, logo
+import os
 
 word_list = ['ardvark', 'baboon', 'camel']
 chosen_word = random.choice(word_list)
 lives = 6
+clear = lambda: os.system('clear')
 
 print(logo)
 display = ['_' for _ in chosen_word]
@@ -14,6 +16,8 @@ display = ['_' for _ in chosen_word]
 end_of_game = False
 while not end_of_game:
   guess = input("Enter a letter: ").lower()
+
+  clear()
 
   if guess in display:
     print(f"You have already guessed this letter {guess}.")
