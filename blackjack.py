@@ -70,20 +70,59 @@ logo = """
       `------'                           |__/   
 ===================================================================              
 """
-print(logo)
 
 import random
-cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-draw_card = random.choice(cards)
-
-user_cards = []
-computer_cards = []
-
-def deal_cards():
 
 
-def append():
 
 
-def calculate_score(input_list):
-  return sum(input_list)
+def deal_card(card_collection):
+  cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+  card = random.choice(cards)
+  return card
+
+
+
+def calculate_score(card_list):
+  if sum(card_list) == 21 and len(card_list) == 2:
+    return 0
+
+  if 11 in card_list and sum(card_list) > 21:
+    card_list.remove(11)
+    card_list.append(1)
+
+  return sum(card_list)
+  
+
+def compare_score(user_score, computer_score):
+  if user_score > 21 and computer_score > 21:
+    return "You went over. You lose."
+
+  if user_score == computer_score:
+    return "Draw"
+  elif computer_score == 0:
+    return "Lose, opponent has BlackJack"
+  elif user_score == 0:
+    return "Win with BlackJack"
+  elif user_score > 21:
+    return "You went over. You lose"
+  elif computer_score > 21:
+    return "Opponet went over. You win"
+  elif user_score > computer_score:
+    return "You win."
+  else:
+    return "You lose."
+  
+
+
+def game():
+  print(logo)
+
+  user_cards = []
+  computer_cards = []
+  is_game_over = False
+
+  is_game_over = input(f"Do you want to play BlackJack: 'y' or 'n'?  ").lower()
+
+
+
