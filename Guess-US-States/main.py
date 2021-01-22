@@ -1,4 +1,5 @@
 import turtle
+import pandas
 
 screen = turtle.Screen()
 screen.title("Guess Game - US States")
@@ -6,8 +7,30 @@ image = "blank_states_img.gif"
 screen.addshape(image)
 turtle.shape(image)
 
-answer_state = screen.textinput(title="Guess Game - US States", prompt="Enter the state's name?")
 
+data = pandas.read_csv("50_states.csv")
+all_states = data.state.to_list()
+guessed_state = []
+
+while len(guessed_state) < 50:
+  answer_state = screen.textinput(title="Guess Game - US States", prompt="Enter the state's name?")
+
+  if answer_state in all_states:
+    guessed_state.append(answer_state)
+      t = turtle.Turtle()
+      t.hideturtle()
+      t.penup()
+      t.color('blue')
+      state_data = data[data.state == answer_state]
+      t.goto(int(state_data.x), int(state_data.y))
+      t.write(answer_state)
+
+
+
+
+screen.exitonclick()
+    
+# if answer_state 
 #def get_mouse_click_coords(x, y):
 #  print(x, y)
 
@@ -17,4 +40,3 @@ answer_state = screen.textinput(title="Guess Game - US States", prompt="Enter th
 ## This gives the data to consle and waits at console.
 
 
-screen.exitonclick()
