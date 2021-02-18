@@ -12,7 +12,7 @@ def button_clicked():
     else:
       kms = 0
       input.config(text="0")
-    my_label4.config(text=kms)
+    my_label4.config(text=f"{kms}")
 
 
 # ******* ROW 0 ****************
