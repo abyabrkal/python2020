@@ -42,15 +42,24 @@ def save():
   if len(website) == 0 or len(password) == 0:
     messagebox.showinfo(title="⚠️ Oops", message=f"Please make sure data is not left emtpy!!!")
   else:
-    with open("./passwordmanager/data.json", "r") as fpass:
-      # read old data
-      data = json.load(fpass)
-      # update old data with new data
+    try:
+      with open("./passwordmanager/data.json", "r") as fpass:
+        # read old data if file present
+        data = json.load(fpass)
+    except FileNotFoundError:
+      with open("./passwordmanager/data.json", "w") as fpass:
+        # create file and write first data
+        json.dump(new_data, fpass, indent=4)
+    else:
+      # if try was successful, read is successful
+      # So, update old data with new data
       data.update(new_data)
 
-    with open("./passwordmanager/data.json", "w") as fpass:
-      # save updated data
-      json.dump(data, fpass, indent=4)
+      with open("./passwordmanager/data.json", "w") as fpass:
+        # save updated data
+        json.dump(data, fpass, indent=4)
+    finally:
+      # whatever be case, clear the form data
       web_input.delete(0, END)
       pass_input.delete(0, END)
   
