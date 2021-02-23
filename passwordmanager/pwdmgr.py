@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
@@ -20,6 +22,8 @@ def generate_password():
   random.shuffle(password_list)
 
   password = ''.join(password_list)
+
+  pyperclip.copy(password)
   pass_input.delete(0, END)
   pass_input.insert(0, password)
 
@@ -28,17 +32,27 @@ def save():
   website = web_input.get()
   email = user_input.get()
   password = pass_input.get()
+  new_data = {
+    website: {
+      "email": email,
+      "password": password
+    }
+  }
 
   if len(website) == 0 or len(password) == 0:
     messagebox.showinfo(title="⚠️ Oops", message=f"Please make sure data is not left emtpy!!!")
   else:
-    is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email}\nPassword: {password}\n\nIs it ok?")
+    with open("./passwordmanager/data.json", "r") as fpass:
+      # read old data
+      data = json.load(fpass)
+      # update old data with new data
+      data.update(new_data)
 
-    if is_ok:
-      with open("passwordmanager/data.txt", "a") as fpass:
-        fpass.write(f"{website} | {email} | {password}\n")
-        web_input.delete(0, END)
-        pass_input.delete(0, END)
+    with open("./passwordmanager/data.json", "w") as fpass:
+      # save updated data
+      json.dump(data, fpass, indent=4)
+      web_input.delete(0, END)
+      pass_input.delete(0, END)
   
 
 
@@ -51,7 +65,7 @@ window.config(padx=50, pady=50)
 # *************** ROW0  **************
 
 canvas = Canvas(width=200, height=200)
-lock_img = PhotoImage(file="passwordmanager/logo.png")
+lock_img = PhotoImage(file="./passwordmanager/logo.png")
 canvas.create_image(100, 100, image=lock_img)
 canvas.grid(column=1, row=0)
 
