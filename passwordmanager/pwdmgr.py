@@ -4,6 +4,7 @@ import random
 import pyperclip
 import json
 
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
   letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -26,6 +27,26 @@ def generate_password():
   pyperclip.copy(password)
   pass_input.delete(0, END)
   pass_input.insert(0, password)
+
+
+# ---------------------------- WEBSITE SEARCH ------------------------------- #
+def find_password():
+  search = web_input.get()
+  try:
+    with open("./passwordmanager/data.json", "r") as data_file:
+      data = json.load(data_file)
+  except FileNotFoundError:
+    messagebox.showinfo(title="⚠️ Oops", message=f"File not found!!!")
+  else:
+    if search in data.keys():
+      website = data[search]["email"]
+      password = data[search]["password"]
+      messagebox.showinfo(title=f"{search}", message=f"Email: {website}\nPassword: {password}")
+    else:
+      messagebox.showinfo(title="⚠️ Oops", message=f"No details for the {search} exists!!!")
+  finally:
+    web_input.delete(0, END)
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
@@ -82,9 +103,12 @@ canvas.grid(column=1, row=0)
 web_label = Label(text="Website: ")
 web_label.grid(column=0, row=1)
 
-web_input = Entry(width=35)
-web_input.grid(column=1, row=1, columnspan=2)
+web_input = Entry(width=21)
+web_input.grid(column=1, row=1)
 web_input.focus()
+
+web_button = Button(text="Search", width=13, command=find_password)
+web_button.grid(column=2, row=1, columnspan=1)
 
 # *************** ROW2  **************
 user_label = Label(text="Email/Username: ")
