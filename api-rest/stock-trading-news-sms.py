@@ -31,9 +31,14 @@ data = response.json()['Time Series (Daily)']
 data_list = [value for (key, value) in data.items()]
 yesterday_closing_price = data_list[0]['4. close']
 day_before_yesterday_closing_price = data_list[1]['4. close']
-difference = abs(float(yesterday_closing_price) - float(day_before_yesterday_closing_price))
+difference = (float(yesterday_closing_price) - float(day_before_yesterday_closing_price))
+up_down = None
+if difference > 0:
+  up_down = 🔺
+else:
+  up_down = 🔻
 
-diff_percent = (difference / float(yesterday_closing_price)) * 100
+diff_percent = round(difference / float(yesterday_closing_price)) * 100
 
 ## STEP 2: Use https://newsapi.org/docs/endpoints/everything
 # Instead of printing ("Get News"), actually fetch the first 3 articles for the COMPANY_NAME.
@@ -53,7 +58,7 @@ if diff_percent > 1:
 ## STEP 3: Use twilio.com/docs/sms/quickstart/python
 # Send a separate message with each article's title and description to your phone number.
 #HINT 1: Consider using a List Comprehension.
-formatted_articles = [f'Headline: {article["title"]}. \nBrief: {article["description"]}' for article in three_articles]
+formatted_articles = [f'{STOCK}: {updown}{diff_percent}%\nHeadline: {article["title"]}. \nBrief: {article["description"]}' for article in three_articles]
 
 
 # proxy client required for hosting this code to run as PythonAnywhere Cloud job
