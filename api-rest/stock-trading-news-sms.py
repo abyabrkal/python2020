@@ -34,9 +34,9 @@ day_before_yesterday_closing_price = data_list[1]['4. close']
 difference = (float(yesterday_closing_price) - float(day_before_yesterday_closing_price))
 up_down = None
 if difference > 0:
-  up_down = 🔺
+  up_down = '🔺'
 else:
-  up_down = 🔻
+  up_down = '🔻'
 
 diff_percent = round(difference / float(yesterday_closing_price)) * 100
 
@@ -58,7 +58,7 @@ if diff_percent > 1:
 ## STEP 3: Use twilio.com/docs/sms/quickstart/python
 # Send a separate message with each article's title and description to your phone number.
 #HINT 1: Consider using a List Comprehension.
-formatted_articles = [f'{STOCK}: {updown}{diff_percent}%\nHeadline: {article["title"]}. \nBrief: {article["description"]}' for article in three_articles]
+formatted_articles = [f'{STOCK}: {up_down}{diff_percent}%\nHeadline: {article["title"]}. \nBrief: {article["description"]}' for article in three_articles]
 
 
 # proxy client required for hosting this code to run as PythonAnywhere Cloud job
