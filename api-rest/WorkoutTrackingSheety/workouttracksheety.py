@@ -33,6 +33,8 @@ print(result)
 workout_date = datetime.now().strftime("%d/%m/%Y")
 workout_time = datetime.now().strftime("%X")
 
+
+
 sheety_endpoint = 'https://api.sheety.co/0b5ce03c8fff1b3df4cc1a751a285277/workoutsTracking/workouts'
 
 
@@ -46,6 +48,7 @@ for exercise in result['exercises']:
             "calories": exercise['nf_calories'],
         }
     }
+
 
 
 sheety_response = requests.post(url=sheety_endpoint, json=sheety_data)
