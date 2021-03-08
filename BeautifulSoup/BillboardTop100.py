@@ -2,7 +2,7 @@
 # PROJECT: SPOTIFY PLAYLIST from BILLBOARD TOP 100 of any past date
 # 
 
-
+import os
 from bs4 import BeautifulSoup
 import requests
 
@@ -18,3 +18,7 @@ all_songs = soup.find_all(name='span', class_='chart-element__information__song'
 
 song_titles = [song.getText() for song in all_songs]
 print(song_titles)
+
+
+SPOTIFY_ID = os.getenv(SPOTIFY_CLIENT_ID)
+SPOTIFY_ = os.getenv(SPOTIFY_CLIENT_ID)

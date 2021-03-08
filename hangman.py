@@ -1,4 +1,4 @@
-# ANGELA - 100 DAYS OF PY
+# 100 DAYS OF PY
 # HANGMAN
 
 import random
