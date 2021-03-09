@@ -20,5 +20,13 @@ song_titles = [song.getText() for song in all_songs]
 print(song_titles)
 
 
-SPOTIFY_ID = os.getenv(SPOTIFY_CLIENT_ID)
-SPOTIFY_ = os.getenv(SPOTIFY_CLIENT_ID)
+spotfy_id = os.environ.get('SPOTIFY_CLIENT_ID')
+spotfy_sc = os.environ.get('SPOTIFY_CLIENT_SECRET')
+
+print(spotfy_id, spotfy_sc)
+
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=spotfy_id,
+                                                           client_secret=spotfy_sc))
